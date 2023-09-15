@@ -3,24 +3,24 @@
 
 import * as React from 'react'
 
-function useSessionStorageState(key, defaultValue = '') {
+function useLocalStorageState(key, defaultValue = '') {
   // 🐨 initialize the state to the value from localStorage
   // A ideia de criar uma função serve para melhorias de performance
   const [value, setValue] = React.useState(
-    () => JSON.parse(window.sessionStorage.getItem(key)) ?? defaultValue,
+    () => JSON.parse(window.localStorage.getItem(key)) ?? defaultValue,
   )
 
   // 🐨 Here's where you'll use `React.useEffect`.
   // The callback should set the `name` in localStorage.
   React.useEffect(() => {
-    window.sessionStorage.setItem(key, JSON.stringify(value))
+    window.localStorage.setItem(key, JSON.stringify(value))
   }, [key, value])
 
   return [value, setValue]
 }
 
 function Greeting({initialName = ''}) {
-  const [value, setValue] = useSessionStorageState('name', initialName)
+  const [value, setValue] = useLocalStorageState('name', initialName)
 
   function handleChange(event) {
     setValue(event.target.value)
